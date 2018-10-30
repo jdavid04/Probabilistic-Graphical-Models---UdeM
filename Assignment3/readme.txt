@@ -1,0 +1,1 @@
+The code implementation for K-Means and GMM is found within asg3_module.py. The Jupyter Notebook calls this module to produce the plots and results. Dependencies are numpy and matplotlib packages (Python 3). Discussion in the notebook is also found in the pdf file.
