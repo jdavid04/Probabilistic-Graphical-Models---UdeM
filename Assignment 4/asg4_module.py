@@ -9,15 +9,22 @@ def alpha_rec(num_timesteps, initialization, A, emission_prob, data):
                         possible values of the latent variable.
         A : State transition matrix of size num_states x num_states (of latent variable). Assuming homogeneous 
             across timesteps.
-        emission_prob: Function which computes the probability of data given latent variable at given timestep.
+        emission_prob: Function which computes the probability of data given latent variable at given timestep. Again
+                       assuming homogeneity across timesteps.
         data: array of observed emissions of length num_timesteps.
     Returns:
-        alphas : Array of computed alpha values at each timestep. Length num_timesteps.
+        alphas : Array of computed alpha vectors at each timestep. Length num_timesteps.
 
     """
-    pass
+    alphas = [None]*num_timesteps
+    alpha[0] = initialization
 
-def beta_rec(num_timesteps, initialization = 1, A, emission_prob):
+    for t in range(1,num_timesteps):
+        alpha[t] = A @ alpha[t-1] * emission_prob(data[t])
+
+    return alphas
+
+def beta_rec(num_timesteps, initialization, A, emission_prob):
     """
     Implements the beta recursion for HMM. Using dynamic programming approach instead of direct recursion.
 
@@ -28,10 +35,17 @@ def beta_rec(num_timesteps, initialization = 1, A, emission_prob):
                         length of the possible values of the latent variable.
         A : State transition matrix of size num_states x num_states (of latent variable). Assuming homogeneous 
             across timesteps.
-        emission_prob: Function which computes the probability of data given latent variable at given timestep.
+        emission_prob: Function which computes the probability of data given latent variable at given timestep. Again
+                        assumes homegeneity across timesteps.
         data: array of observed emissions of length num_timesteps (or num_timesteps - 1, not needed at final timestep).
-
-
-
+    Returns:
+        betas : Array of computed beta vectors at each time step.
     """
-    pass
+    betas = [None]*num_timesteps
+    betas[-1] = initialization
+
+    for t in range(num_timesteps -1, -1,-1):
+        betas[t] = A @ betas[t+1] * emission_prob(data[t+1])
+    
+    return betas
+
