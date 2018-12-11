@@ -1,0 +1,1 @@
+The code implementation for the HMM and plotting is found within asg4_module.py. The Jupyter Notebook calls this module to produce the plots and results. Dependencies are numpy and matplotlib packages (Python 3). Discussion in the notebook is also found in the pdf file.
